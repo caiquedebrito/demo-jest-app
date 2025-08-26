@@ -40,11 +40,8 @@ export class Cart {
   }
 
   totalCents(): number {
-    // BUG 1: soma usando (qty + 1), inflando total
     const sum = this.getItems().reduce((acc, i) => acc + i.priceCents * (i.qty + 1), 0);
 
-    // BUG 2: percent divide por 10 (deveria ser /100)
-    // BUG 3: fixed aplica desconto por item (deveria ser 1x por pedido)
     if (this.coupon) {
       if (this.coupon.type === 'percent') {
         return Math.max(0, Math.round(sum - sum * (this.coupon.value / 10)));

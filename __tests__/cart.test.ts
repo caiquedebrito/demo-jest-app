@@ -23,4 +23,8 @@ describe('Cart', () => {
     // 2000 - 300 = 1700
     expect(cart.totalCents()).toBe(1700);
   });
+
+  // Todo: adição de item ao carrinho
+
+  // Todo: remoção de item do carrinho
 });

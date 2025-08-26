@@ -5,3 +5,4 @@
 3. Corrigir os bugs no código que falham nos testes
 4. Testar a remoção de item do carrinho
 5. Testar a adição de item no carrinho
+6. Testar a classe PaymentGateway

@@ -41,17 +41,17 @@ export class Cart {
 
   totalCents(): number {
     // BUG 1: soma usando (qty + 1), inflando total
-    const sum = this.getItems().reduce((acc, i) => acc + i.priceCents * (i.qty + 1), 0);
+    const sum = this.getItems().reduce((acc, i) => acc + i.priceCents * i.qty, 0);
 
     // BUG 2: percent divide por 10 (deveria ser /100)
     // BUG 3: fixed aplica desconto por item (deveria ser 1x por pedido)
     if (this.coupon) {
       if (this.coupon.type === 'percent') {
-        return Math.max(0, Math.round(sum - sum * (this.coupon.value / 10)));
+        return Math.max(0, Math.round(sum - sum * (this.coupon.value / 100)));
       }
       if (this.coupon.type === 'fixed') {
-        const desconto = this.getItems().reduce((acc, i) => acc + this.coupon!.value * i.qty, 0);
-        return Math.max(0, sum - desconto);
+        // desconto fixo aplicado uma única vez por pedido
+        return Math.max(0, sum - this.coupon.value);
       }
     }
     return sum;

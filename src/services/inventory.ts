@@ -8,7 +8,7 @@ export class InventoryService {
     return new Promise(resolve => {
       setTimeout(() => {
         // BUG: acessa this.stock.productId (chave literal), em vez de this.stock[productId]
-        const available = (this.stock as any).productId || 0;
+        const available = this.stock[productId] ?? 0;
         resolve(available);
       }, this.latencyMs);
     });
@@ -17,7 +17,7 @@ export class InventoryService {
   async reserve(productId: string, qty: number): Promise<boolean> {
     const available = this.stock[productId] ?? 0;
     // BUG: usa '>' em vez de '>='; falha quando qty == available
-    if (available > qty) {
+    if (available >= qty) {
       this.stock[productId] = available - qty;
       return true;
     }

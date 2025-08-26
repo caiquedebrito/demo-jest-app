@@ -19,12 +19,26 @@ export async function checkout(
   // - Cobra com acréscimo arbitrário de 10%
   // - Passa centavos como se fossem reais
   const totalCents = cart.totalCents();
-  const charged = await payment.charge(Math.round(totalCents * 1.10)); // errado
 
-  // Reserva depois de cobrar e sem aguardar (errado)
+  // 1) valida estoque antes de qualquer cobrança
   for (const it of items) {
-    inventory.reserve(it.id, it.qty);
+    const available = await inventory.getAvailable(it.id);
+    if (available < it.qty) {
+      throw new Error(`Sem estoque para ${it.id}: solicitado ${it.qty}, disponível ${available}`);
+    }
   }
+
+  // 2) reserva estoque (garante a disponibilidade)
+  for (const it of items) {
+    const ok = await inventory.reserve(it.id, it.qty);
+    if (!ok) {
+      throw new Error(`Produto ${it.id} sem estoque suficiente`);
+    }
+  }
+
+  // 3) cobra o valor correto (converter centavos para reais)
+  const amountBRL = totalCents / 100;
+  const charged = await payment.charge(amountBRL);
 
   return {
     orderId: 'ord_' + charged,

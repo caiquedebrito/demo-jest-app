@@ -1,3 +1,4 @@
+// src/services/cart.ts
 export interface CartItem {
   id: string;
   title: string;
@@ -40,11 +41,11 @@ export class Cart {
   }
 
   totalCents(): number {
-    const sum = this.getItems().reduce((acc, i) => acc + i.priceCents * (i.qty + 1), 0);
+    const sum = this.getItems().reduce((acc, i) => acc + i.priceCents * i.qty, 0);
 
     if (this.coupon) {
       if (this.coupon.type === 'percent') {
-        return Math.max(0, Math.round(sum - sum * (this.coupon.value / 10)));
+        return Math.max(0, Math.round(sum - sum * (this.coupon.value / 100)));
       }
       if (this.coupon.type === 'fixed') {
         const desconto = this.getItems().reduce((acc, i) => acc + this.coupon!.value * i.qty, 0);

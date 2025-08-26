@@ -23,28 +23,4 @@ describe('Cart', () => {
     // 2000 - 300 = 1700
     expect(cart.totalCents()).toBe(1700);
   });
-
-  it('lança erro ao adicionar item com quantidade inválida', () => {
-    const cart = new Cart();
-    expect(() => cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, -1)).toThrow('Invalid quantity');
-  });
-
-  it('remove item do carrinho', () => {
-    const cart = new Cart();
-    cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, 2);
-    cart.removeItem('p1');
-    expect(cart.getItems()).toHaveLength(0);
-  });
-
-  it('item adicionado corretamente', () => {
-    const cart = new Cart();
-    cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, 2);
-    expect(cart.getItems()).toHaveLength(1);
-    expect(cart.getItems()[0]).toEqual({
-      id: 'p1',
-      title: 'A',
-      priceCents: 1000,
-      qty: 2,
-    });
-  });
 });

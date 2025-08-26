@@ -24,7 +24,10 @@ describe('Cart', () => {
     expect(cart.totalCents()).toBe(1700);
   });
 
-  // Todo: adição de item ao carrinho
+  // Todo: Testar lançamento do erro ao adicionar item com quantidade inválida
+  // Todo: Testar o não lançamento de erro ao adicionar item com quantidade válida; utilizar o toThrow
 
-  // Todo: remoção de item do carrinho
+  // Todo: adição de item ao carrinho; utilizar o toEqual
+
+  // Todo: remoção de item do carrinho; utilizar o toHaveLength
 });

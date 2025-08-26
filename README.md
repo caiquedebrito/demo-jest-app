@@ -4,3 +4,4 @@
 2. Testar o não lançamneto da excessão quando a quantidade de item for válida (> 0)
 3. Corrigir os bugs no código que falham nos testes
 4. Testar a remoção de item do carrinho
+5. Testar a adição de item no carrinho

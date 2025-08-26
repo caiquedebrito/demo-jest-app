@@ -24,18 +24,27 @@ describe('Cart', () => {
     expect(cart.totalCents()).toBe(1700);
   });
 
+  // Todo: Testar lançamento do erro ao adicionar item com quantidade inválida
+  // Todo: Testar o não lançamento de erro ao adicionar item com quantidade válida; utilizar o toThrow
   it('lança erro ao adicionar item com quantidade inválida', () => {
     const cart = new Cart();
     expect(() => cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, -1)).toThrow('Invalid quantity');
+    expect(() => cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, -1)).toThrow(Error);
   });
 
+  // Todo: remoção de item do carrinho; utilizar o toHaveLength
   it('remove item do carrinho', () => {
     const cart = new Cart();
     cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, 2);
     cart.removeItem('p1');
     expect(cart.getItems()).toHaveLength(0);
+    cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, 2);
+
+    expect(cart.getItems()).toHaveLength(1);
+    expect(cart.getItems()).not.toHaveLength(0);
   });
 
+  // Todo: adição de item ao carrinho; utilizar o toEqual
   it('item adicionado corretamente', () => {
     const cart = new Cart();
     cart.addItem({ id: 'p1', title: 'A', priceCents: 1000 }, 2);
